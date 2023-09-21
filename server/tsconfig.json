@@ -1,6 +1,14 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
     "module": "CommonJS",
-    "strict": true
-  }
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true, // 型定義ファイルの型チェックをスキップします。プロジェクトが大規模でない場合、型定義ファイルの型チェックを無効にすることでコンパイル速度を向上させることができます。
+    "forceConsistentCasingInFileNames": true, //ファイル名の大文字と小文字の一貫性を強制します。これにより、OSに依存しないファイル名の取り扱いが可能になります。
+    "outDir": "./dist", // コンパイル結果の出力先
+    "rootDir": "./src" // ソースコードのルートディレクトリ
+  },
+  "include": ["src/**/*.ts"], // コンパイルするファイルを指定します。ここではsrcディレクトリ以下のすべての.tsファイルを対象にしています。
+  "exclude": ["node_modules"] // コンパイルから除外するディレクトリを指定します。通常、node_modulesディレクトリはコンパイル対象外とします。
 }
