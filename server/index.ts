@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 const mongoose = require('mongoose');
 const CryptoJS = require('crypto-js');
 const JWT = require('jsonwebtoken');
+const { body } = require('express-validator');
 const User = require('./src/v1/models/user');
 const app = express();
 const PORT = 5000;
@@ -27,6 +28,15 @@ try {
 //ユーザー新規登録API
 app.post(
   '/register',
+  body('username')
+    .isLength({ min: 8 })
+    .withMessage('ユーザー名は8文字以上ある必要があります。'),
+  body('password')
+    .isLength({ min: 8 })
+    .withMessage('パスワードは8文字以上ある必要があります。'),
+  body('confirmPassword')
+    .isLength({ min: 8 })
+    .withMessage('確認用パスワードは8文字以上ある必要があります。'),
   async (req: Request<{}, {}, RegisterRequest>, res: Response) => {
     //パスワードの受け取り
     const password = req.body.password;
