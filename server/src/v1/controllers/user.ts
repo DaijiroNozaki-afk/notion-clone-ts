@@ -3,6 +3,13 @@ const JWT = require('jsonwebtoken');
 const CryptoJS = require('crypto-js');
 const User = require('../models/user');
 
+// リクエストボディの型を定義
+interface RegisterRequest {
+  username: string;
+  password: string;
+  // 他の必要なフィールドをここに追加
+}
+
 exports.register = async (
   req: Request<{}, {}, RegisterRequest>,
   res: Response
@@ -27,3 +34,24 @@ exports.register = async (
   }
 };
 //ユーザーログイン用API
+exports.login = async (
+  req: Request<{}, {}, RegisterRequest>,
+  res: Response
+) => {
+  const { username, password } = req.body;
+  try {
+    //DB からユーザーが存在するか探してくる
+    const user = await User.findOne({ username: username });
+    if (!user) {
+      res.status(401).json({
+        errors: {
+          param: 'username',
+          message: 'ユーザーが無効です。',
+        },
+      });
+    }
+    // パスワードが合っているか照合する
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};

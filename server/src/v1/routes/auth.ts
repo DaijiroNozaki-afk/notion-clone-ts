@@ -5,12 +5,6 @@ require('dotenv').config();
 const User = require('../models/user');
 const validation = require('../handlers/validation');
 const userController = require('../controllers/user');
-// リクエストボディの型を定義
-interface RegisterRequest {
-  username: string;
-  password: string;
-  // 他の必要なフィールドをここに追加
-}
 
 //ユーザー新規登録API
 router.post(
@@ -34,5 +28,15 @@ router.post(
   validation.validate,
   userController.register
 );
-
+//ログイン用API
+router.post(
+  '/login',
+  body('username')
+    .isLength({ min: 8 })
+    .withMessage('ユーザー名は8文字以上ある必要があります。'),
+  body('password')
+    .isLength({ min: 8 })
+    .withMessage('パスワードは8文字以上ある必要があります。'),
+  validation.validate
+);
 module.exports = router;
