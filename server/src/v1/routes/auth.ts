@@ -1,22 +1,8 @@
 import { Request, Response } from 'express';
+import { RegisterRequest, UserRequest } from '../types/types';
 const router = require('express').Router();
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 require('dotenv').config();
-
-// リクエストボディの型を定義
-interface RegisterRequest {
-  username: string;
-  password: string;
-  // 他の必要なフィールドをここに追加
-}
-
-// user リクエスト の型を定義
-interface UserRequest {
-  _id: string; // 例: '650d069d67ef2b6c5578a46b'
-  username: string; // 例: 'notionUser2'
-  password: string; // 例: 'U2FsdGVkX18QnLnBMVbtD98b6ktTpCJ+a+RmqNhX12k='
-  __v: number; // 例: 0
-}
 
 const User = require('../models/user');
 const validation = require('../handlers/validation');

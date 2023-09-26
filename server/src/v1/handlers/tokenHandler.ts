@@ -1,16 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import { UserRequest } from '../types/types';
 
 const JWT = require('jsonwebtoken');
 require('dotenv').config();
 const User = require('../models/user');
-
-// user リクエスト の型を定義
-interface UserRequest {
-  _id: string; // 例: '650d069d67ef2b6c5578a46b'
-  username: string; // 例: 'notionUser2'
-  password: string; // 例: 'U2FsdGVkX18QnLnBMVbtD98b6ktTpCJ+a+RmqNhX12k='
-  __v: number; // 例: 0
-}
 
 // クライアントから渡されたJWT が正常か検証
 const tokenDecode = (req: Request) => {

@@ -2,18 +2,7 @@ import { Request, Response } from 'express';
 const JWT = require('jsonwebtoken');
 const CryptoJS = require('crypto-js');
 const User = require('../models/user');
-
-// リクエストボディの型を定義
-interface RegisterRequest {
-  username: string;
-  password: string;
-  // 他の必要なフィールドをここに追加
-}
-interface IUser {
-  username: string;
-  password: string;
-  _id: string;
-}
+import { RegisterRequest, IUser } from '../types/types';
 
 exports.register = async (
   req: Request<{}, {}, RegisterRequest>,
