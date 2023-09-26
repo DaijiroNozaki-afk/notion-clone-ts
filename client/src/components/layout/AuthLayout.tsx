@@ -23,8 +23,8 @@ const AuthLayout = () => {
           />
           Notion クローン開発
         </Box>
+        <Outlet />
       </Container>
-      <Outlet />
     </div>
   );
 };
