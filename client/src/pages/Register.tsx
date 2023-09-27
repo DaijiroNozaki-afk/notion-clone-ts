@@ -5,9 +5,22 @@ import { LoadingButton } from '@mui/lab';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    //入力欄の文字列を取得
+    const data = new FormData(e.target as HTMLFormElement);
+    const username = (data.get('username') as string | null)?.trim();
+    const password = (data.get('password') as string | null)?.trim();
+    const confirmPassword = (
+      data.get('confirmPassword') as string | null
+    )?.trim();
+    console.log(username);
+    console.log(password);
+    console.log(confirmPassword);
+  };
   return (
     <>
-      <Box component="form">
+      <Box component="form" onSubmit={handleSubmit}>
         <TextField
           fullWidth
           id="username"
