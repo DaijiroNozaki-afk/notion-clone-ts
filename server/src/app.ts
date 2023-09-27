@@ -1,1 +1,1 @@
-console.log('Hello! Node.js x TypeScript.');
+// console.log('Hello! Node.js x TypeScript.');

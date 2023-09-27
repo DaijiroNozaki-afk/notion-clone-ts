@@ -15,7 +15,6 @@ const Register = () => {
     const confirmPassword = (data.get('confirmPassword') || '')
       .toString()
       .trim();
-
     // 新規登録API を叩く
     try {
       const res = await authApi.register({

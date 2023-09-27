@@ -22,6 +22,7 @@ router.post(
     .isLength({ min: 8 })
     .withMessage('確認用パスワードは8文字以上ある必要があります。'),
   body('username').custom((value: String) => {
+    // console.log(body);
     return User.findOne({ username: value }).then((user: String | null) => {
       if (user) {
         return Promise.reject('このユーザーはすでに使われています。');
