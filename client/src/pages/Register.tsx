@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Box, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import authApi from '../api/authApi';
 import axios, { AxiosError } from 'axios';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [usernameErrText, setUsernameErrText] = useState<string>('');
   const [passwordErrText, setPasswordErrText] = useState<string>('');
   const [confirmErrText, setConfirmErrText] = useState<string>('');
@@ -66,6 +67,7 @@ const Register = () => {
       const token = res.data.token;
       localStorage.setItem('token', token);
       console.log('新規登録に成功しました。');
+      navigate('/');
     } catch (err) {
       if (axios.isAxiosError(err) && err.response && (err as AxiosError)) {
         const errors = err.response.data.errors;
