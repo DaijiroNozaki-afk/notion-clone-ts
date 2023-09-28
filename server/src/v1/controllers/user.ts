@@ -42,10 +42,12 @@ exports.login = async (
     const user: IUser = await User.findOne({ username: username });
     if (!user) {
       return res.status(401).json({
-        errors: {
-          param: 'username',
-          message: 'ユーザーが無効です。',
-        },
+        errors: [
+          {
+            param: 'username',
+            msg: 'ユーザーが無効です。',
+          },
+        ],
       });
     }
     // パスワードが合っているか照合する
@@ -56,10 +58,12 @@ exports.login = async (
 
     if (descryptedPassword !== password) {
       return res.status(401).json({
-        errors: {
-          param: 'password',
-          message: 'パスワードが無効です。',
-        },
+        errors: [
+          {
+            param: 'password',
+            msg: 'パスワードが無効です。',
+          },
+        ],
       });
     }
     //JWTの発行
