@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import { Link, useNavigate } from 'react-router-dom';
 import authApi from '../api/authApi';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -58,13 +58,13 @@ const Register = () => {
     setLoading(true);
     // 新規登録API を叩く
     try {
-      const res = await authApi.register({
+      const res: AxiosResponse = await authApi.register({
         username,
         password,
         confirmPassword,
       });
       setLoading(false);
-      const token = res.data.token;
+      const token: string = res.data.token;
       localStorage.setItem('token', token);
       console.log('新規登録に成功しました。');
       navigate('/');
