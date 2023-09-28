@@ -4,11 +4,21 @@ import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import { Link } from 'react-router-dom';
 import authApi from '../api/authApi';
+import axios, { AxiosError } from 'axios';
 
 const Register = () => {
   const [usernameErrText, setUsernameErrText] = useState<string>('');
   const [passwordErrText, setPasswordErrText] = useState<string>('');
   const [confirmErrText, setConfirmErrText] = useState<string>('');
+
+  // エラーの型を定義
+  interface validationErrInt {
+    location: string;
+    msg: string;
+    path: string;
+    type: string;
+    value: string;
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUsernameErrText('');
@@ -54,7 +64,21 @@ const Register = () => {
       localStorage.setItem('token', token);
       console.log('新規登録に成功しました。');
     } catch (err) {
-      console.log(err);
+      // const errors = err;
+      if (axios.isAxiosError(err) && err.response && (err as AxiosError)) {
+        const errors = err.response.data.errors;
+        errors.forEach((err: validationErrInt) => {
+          if (err.path === 'username') {
+            setUsernameErrText(err.msg);
+          }
+          if (err.path === 'password') {
+            setPasswordErrText(err.msg);
+          }
+          if (err.path === 'confirmPassword') {
+            setConfirmErrText(err.msg);
+          }
+        });
+      }
     }
   };
   return (
