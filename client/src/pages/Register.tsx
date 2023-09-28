@@ -10,6 +10,7 @@ const Register = () => {
   const [usernameErrText, setUsernameErrText] = useState<string>('');
   const [passwordErrText, setPasswordErrText] = useState<string>('');
   const [confirmErrText, setConfirmErrText] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   // エラーの型を定義
   interface validationErrInt {
@@ -53,6 +54,7 @@ const Register = () => {
 
     if (error) return;
 
+    setLoading(true);
     // 新規登録API を叩く
     try {
       const res = await authApi.register({
@@ -60,11 +62,11 @@ const Register = () => {
         password,
         confirmPassword,
       });
+      setLoading(false);
       const token = res.data.token;
       localStorage.setItem('token', token);
       console.log('新規登録に成功しました。');
     } catch (err) {
-      // const errors = err;
       if (axios.isAxiosError(err) && err.response && (err as AxiosError)) {
         const errors = err.response.data.errors;
         errors.forEach((err: validationErrInt) => {
@@ -79,6 +81,7 @@ const Register = () => {
           }
         });
       }
+      setLoading(false);
     }
   };
   return (
@@ -93,6 +96,7 @@ const Register = () => {
           required
           helperText={usernameErrText}
           error={usernameErrText !== ''}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -104,6 +108,7 @@ const Register = () => {
           required
           helperText={passwordErrText}
           error={passwordErrText !== ''}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -115,12 +120,13 @@ const Register = () => {
           required
           helperText={confirmErrText}
           error={confirmErrText !== ''}
+          disabled={loading}
         />
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
           fullWidth
           type="submit"
-          loading={false}
+          loading={loading}
           color="primary"
           variant="outlined"
         >
