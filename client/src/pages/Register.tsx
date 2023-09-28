@@ -68,6 +68,7 @@ const Register = () => {
           name="username"
           required
           helperText={usernameErrText}
+          error={usernameErrText !== ''}
         />
         <TextField
           fullWidth
@@ -78,6 +79,7 @@ const Register = () => {
           type="password"
           required
           helperText={passwordErrText}
+          error={passwordErrText !== ''}
         />
         <TextField
           fullWidth
@@ -88,6 +90,7 @@ const Register = () => {
           type="password"
           required
           helperText={confirmErrText}
+          error={confirmErrText !== ''}
         />
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
