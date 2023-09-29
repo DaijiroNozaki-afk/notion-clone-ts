@@ -13,6 +13,7 @@ interface loginUserInt {
 const authApi = {
   register: (params: userInt) => axiosClient.post('auth/register', params),
   login: (params: loginUserInt) => axiosClient.post('auth/login', params),
+  verifyToken: () => axiosClient.post('auth/verify-token'),
 };
 
 export default authApi;
