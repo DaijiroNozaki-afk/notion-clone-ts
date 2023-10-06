@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import AppLayout from './components/layout/AppLayout';
-import { Home } from '@mui/icons-material';
+import Home from './pages/Home';
 function App() {
   const theme = createTheme({
     palette: { primary: blue },
