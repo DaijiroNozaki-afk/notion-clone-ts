@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { RegisterRequest, UserRequest } from '../types/types';
-const router = require('express').Router();
+import express from 'express';
+const router = express.Router();
 const { body } = require('express-validator');
 require('dotenv').config();
 
