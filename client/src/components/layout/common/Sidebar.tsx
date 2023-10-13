@@ -12,6 +12,7 @@ import React from 'react';
 import assets from '../../../assets/index';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../redux/store';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   const navigate: NavigateFunction = useNavigate();
@@ -83,6 +84,27 @@ const Sidebar = () => {
               <AddBoxOutlined />
             </IconButton>
           </Box>
+        </ListItemButton>
+        <ListItemButton
+          sx={{ pl: '20px' }}
+          component={Link}
+          to="/memo/daskfj;asdlkfjasd;lkf"
+        >
+          <Typography>📝無題</Typography>
+        </ListItemButton>
+        <ListItemButton
+          sx={{ pl: '20px' }}
+          component={Link}
+          to="/memo/daskfj;asdlkfjasd;lkf"
+        >
+          <Typography>📝無題</Typography>
+        </ListItemButton>
+        <ListItemButton
+          sx={{ pl: '20px' }}
+          component={Link}
+          to="/memo/daskfj;asdlkfjasd;lkf"
+        >
+          <Typography>📝無題</Typography>
         </ListItemButton>
       </List>
     </Drawer>
