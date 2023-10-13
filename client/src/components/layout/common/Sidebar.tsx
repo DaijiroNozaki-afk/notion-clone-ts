@@ -11,9 +11,11 @@ import {
 import React from 'react';
 import assets from '../../../assets/index';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../redux/store';
 
 const Sidebar = () => {
   const navigate: NavigateFunction = useNavigate();
+  const user = useAppSelector((state) => state.user.value);
   const logout = (): void => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -42,7 +44,7 @@ const Sidebar = () => {
             }}
           >
             <Typography variant="body2" fontWeight="700">
-              shincode
+              {user.username}
             </Typography>
             <IconButton onClick={logout}>
               <LogoutOutlined></LogoutOutlined>
