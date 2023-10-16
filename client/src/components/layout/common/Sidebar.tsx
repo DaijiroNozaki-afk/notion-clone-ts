@@ -8,11 +8,12 @@ import {
   ListItemButton,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import assets from '../../../assets/index';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../redux/store';
 import { Link } from 'react-router-dom';
+import memoApi from '../../../api/memoApi';
 
 const Sidebar = () => {
   const navigate: NavigateFunction = useNavigate();
@@ -21,6 +22,18 @@ const Sidebar = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
+
+  useEffect(() => {
+    const getMemos = async () => {
+      try {
+        const res = await memoApi.getAll();
+        console.log(res);
+      } catch (err) {
+        alert(err);
+      }
+    };
+    getMemos();
+  }, []);
   return (
     <Drawer
       container={window.document.body}
