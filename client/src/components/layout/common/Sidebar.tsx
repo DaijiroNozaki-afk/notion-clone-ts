@@ -11,13 +11,16 @@ import {
 import React, { useEffect } from 'react';
 import assets from '../../../assets/index';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../redux/store';
+import { useAddDispatch, useAppSelector } from '../../../redux/store';
 import { Link } from 'react-router-dom';
 import memoApi from '../../../api/memoApi';
+import { setMemo } from '../../../redux/features/memoSlice';
 
 const Sidebar = () => {
+  const dispatch = useAddDispatch();
   const navigate: NavigateFunction = useNavigate();
   const user = useAppSelector((state) => state.user.value);
+  const memos = useAppSelector((state) => state.memo.value);
   const logout = (): void => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -27,7 +30,9 @@ const Sidebar = () => {
     const getMemos = async () => {
       try {
         const res = await memoApi.getAll();
-        console.log(res);
+        // console.log(res);
+        dispatch(setMemo(res.data));
+        console.log(memos);
       } catch (err) {
         alert(err);
       }
