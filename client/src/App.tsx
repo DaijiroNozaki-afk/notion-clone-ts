@@ -9,6 +9,8 @@ import { CssBaseline } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import AppLayout from './components/layout/AppLayout';
 import Home from './pages/Home';
+import Memo from './pages/Memo';
+
 function App() {
   const theme = createTheme({
     palette: { primary: blue },
@@ -25,6 +27,7 @@ function App() {
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Home />} />
             <Route path="memo" element={<Home />} />
+            <Route path="memo/:memoId" element={<Memo />} />
           </Route>
         </Routes>
       </BrowserRouter>
