@@ -20,9 +20,3 @@ const userSlice = createSlice({
 export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;
-
-// const initialState = { value: {} };
-// export const userSlice = createSlice({
-//   name: 'user',
-//   initialState,
-// });

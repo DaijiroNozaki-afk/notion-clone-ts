@@ -19,3 +19,14 @@ export interface IUser {
   password: string;
   _id: string;
 }
+// memo の型を定義
+export interface MemoType {
+  _id: string; //本当はObjectId型?
+  user: string;
+  icon: string;
+  title: string;
+  description: string;
+  position: number;
+  favorite: boolean;
+  favoritePosition: number;
+}

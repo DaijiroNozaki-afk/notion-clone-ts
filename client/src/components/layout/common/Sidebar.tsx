@@ -15,7 +15,7 @@ import { useAddDispatch, useAppSelector } from '../../../redux/store';
 import { Link } from 'react-router-dom';
 import memoApi from '../../../api/memoApi';
 import { setMemo } from '../../../redux/features/memoSlice';
-
+import { MemoType } from '../../../types/types';
 const Sidebar = () => {
   const dispatch = useAddDispatch();
   const navigate: NavigateFunction = useNavigate();
@@ -30,15 +30,13 @@ const Sidebar = () => {
     const getMemos = async () => {
       try {
         const res = await memoApi.getAll();
-        // console.log(res);
         dispatch(setMemo(res.data));
-        console.log(memos);
       } catch (err) {
         alert(err);
       }
     };
     getMemos();
-  }, []);
+  }, [dispatch]);
   return (
     <Drawer
       container={window.document.body}
@@ -103,27 +101,19 @@ const Sidebar = () => {
             </IconButton>
           </Box>
         </ListItemButton>
-        <ListItemButton
-          sx={{ pl: '20px' }}
-          component={Link}
-          to="/memo/daskfj;asdlkfjasd;lkf"
-        >
-          <Typography>📝無題</Typography>
-        </ListItemButton>
-        <ListItemButton
-          sx={{ pl: '20px' }}
-          component={Link}
-          to="/memo/daskfj;asdlkfjasd;lkf"
-        >
-          <Typography>📝無題</Typography>
-        </ListItemButton>
-        <ListItemButton
-          sx={{ pl: '20px' }}
-          component={Link}
-          to="/memo/daskfj;asdlkfjasd;lkf"
-        >
-          <Typography>📝無題</Typography>
-        </ListItemButton>
+        {memos.map((item: MemoType, index: number) => (
+          <ListItemButton
+            sx={{ pl: '20px' }}
+            component={Link}
+            to={`/memo/${item._id}`}
+            key={item._id}
+            selected={false}
+          >
+            <Typography>
+              {item.icon} {item.title}
+            </Typography>
+          </ListItemButton>
+        ))}
       </List>
     </Drawer>
   );
