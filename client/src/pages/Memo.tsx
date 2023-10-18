@@ -23,18 +23,43 @@ const Memo = () => {
     };
     getMemo();
   }, [memoId]);
+
+  let timer: NodeJS.Timeout;
+  const timeout: number = 500;
+
   const updateTitle = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    clearTimeout(timer);
     const newTitle: string = e.target.value;
     setTitle(newTitle);
-    try {
-      if (memoId !== undefined) {
-        await memoApi.update(memoId, { title: newTitle });
-      } else {
-        alert('メモが選択されていません。');
+
+    timer = setTimeout(async () => {
+      try {
+        if (memoId !== undefined) {
+          await memoApi.update(memoId, { title: newTitle });
+        } else {
+          alert('メモが選択されていません。');
+        }
+      } catch (err) {
+        alert(err);
       }
-    } catch (err) {
-      alert(err);
-    }
+    }, timeout);
+  };
+  const updateDescription = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    clearTimeout(timer);
+    const newDescription: string = e.target.value;
+    setDescription(newDescription);
+
+    timer = setTimeout(async () => {
+      try {
+        if (memoId !== undefined) {
+          await memoApi.update(memoId, { description: newDescription });
+        } else {
+          alert('メモが選択されていません。');
+        }
+      } catch (err) {
+        alert(err);
+      }
+    }, timeout);
   };
   return (
     <>
@@ -66,6 +91,7 @@ const Memo = () => {
           }}
         />
         <TextField
+          onChange={updateDescription}
           value={description}
           placeholder="追加"
           variant="outlined"
