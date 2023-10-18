@@ -23,6 +23,19 @@ const Memo = () => {
     };
     getMemo();
   }, [memoId]);
+  const updateTitle = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle: string = e.target.value;
+    setTitle(newTitle);
+    try {
+      if (memoId !== undefined) {
+        await memoApi.update(memoId, { title: newTitle });
+      } else {
+        alert('メモが選択されていません。');
+      }
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <>
       <Box
@@ -41,6 +54,7 @@ const Memo = () => {
       </Box>
       <Box sx={{ padding: '10px 50px' }}>
         <TextField
+          onChange={updateTitle}
           value={title}
           placeholder="無題"
           variant="outlined"
