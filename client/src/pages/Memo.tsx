@@ -1,8 +1,24 @@
 import { DeleteOutlineOutlined, StarBorderOutlined } from '@mui/icons-material';
 import { Box, Button, IconButton, TextField } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import memoApi from '../api/memoApi';
 
 const Memo = () => {
+  const { memoId } = useParams<string>();
+  useEffect(() => {
+    const getMemo = async () => {
+      try {
+        if (memoId !== undefined) {
+          const res = await memoApi.getOne(memoId);
+          console.log(res);
+        }
+      } catch (err) {
+        alert(err);
+      }
+    };
+    getMemo();
+  }, [memoId]);
   return (
     <>
       <Box

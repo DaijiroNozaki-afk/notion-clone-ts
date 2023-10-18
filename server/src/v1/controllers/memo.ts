@@ -39,7 +39,7 @@ exports.getOne = async (
   const { memoId } = req.params;
   try {
     if (req.user !== undefined) {
-      const memo: MemoRequest = Memo.findOne({
+      const memo: MemoRequest = await Memo.findOne({
         user: req.user._id,
         _id: memoId,
       });
