@@ -8,17 +8,20 @@ import {
   ListItemButton,
   Typography,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import assets from '../../../assets/index';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
 import { useAddDispatch, useAppSelector } from '../../../redux/store';
 import { Link } from 'react-router-dom';
 import memoApi from '../../../api/memoApi';
 import { setMemo } from '../../../redux/features/memoSlice';
 import { MemoType } from '../../../types/types';
+
 const Sidebar = () => {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const dispatch = useAddDispatch();
   const navigate: NavigateFunction = useNavigate();
+  const { memoId } = useParams<string>();
   const user = useAppSelector((state) => state.user.value);
   const memos = useAppSelector((state) => state.memo.value);
   const logout = (): void => {
@@ -37,6 +40,13 @@ const Sidebar = () => {
     };
     getMemos();
   }, [dispatch]);
+  //選択されたメモをハイライト表示する
+  useEffect(() => {
+    const activeIndex: number = memos.findIndex(
+      (e: MemoType) => e._id === memoId
+    );
+    setActiveIndex(activeIndex);
+  }, [navigate]);
   return (
     <Drawer
       container={window.document.body}
@@ -107,7 +117,7 @@ const Sidebar = () => {
             component={Link}
             to={`/memo/${item._id}`}
             key={item._id}
-            selected={false}
+            selected={index === activeIndex}
           >
             <Typography>
               {item.icon} {item.title}
