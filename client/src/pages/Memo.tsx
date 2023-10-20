@@ -61,6 +61,19 @@ const Memo = () => {
       }
     }, timeout);
   };
+
+  const deleteMemo = async () => {
+    try {
+      if (memoId !== undefined) {
+        const deletedMemo = await memoApi.delete(memoId);
+        console.log(deletedMemo);
+      } else {
+        alert('メモが選択されていません。');
+      }
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <>
       <Box
@@ -73,7 +86,7 @@ const Memo = () => {
         <IconButton>
           <StarBorderOutlined />
         </IconButton>
-        <IconButton color="error">
+        <IconButton color="error" onClick={deleteMemo}>
           <DeleteOutlineOutlined />
         </IconButton>
       </Box>

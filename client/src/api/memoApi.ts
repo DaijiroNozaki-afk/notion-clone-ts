@@ -17,6 +17,7 @@ const memoApi = {
   getOne: (id: string) => axiosClient.get(`memo/${id}`),
   update: (id: string, params: updateInt) =>
     axiosClient.put(`memo/${id}`, params),
+  delete: (id: string) => axiosClient.delete(`memo/${id}`),
 };
 
 export default memoApi;
