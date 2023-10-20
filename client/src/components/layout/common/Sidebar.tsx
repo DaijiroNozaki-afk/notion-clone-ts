@@ -24,6 +24,7 @@ const Sidebar = () => {
   const { memoId } = useParams<string>();
   const user = useAppSelector((state) => state.user.value);
   const memos = useAppSelector((state) => state.memo.value);
+  // const memos: MemoType[] = useAppSelector((state) => state.memo.value);
   const logout = (): void => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -47,6 +48,18 @@ const Sidebar = () => {
     );
     setActiveIndex(activeIndex);
   }, [navigate]);
+
+  const addMemo = async () => {
+    try {
+      const res = await memoApi.create();
+      const newMemos = [res.data, ...memos];
+      console.log(newMemos);
+      dispatch(setMemo(newMemos));
+      navigate(`memo/${res.data._id}`);
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <Drawer
       container={window.document.body}
@@ -106,7 +119,11 @@ const Sidebar = () => {
             <Typography variant="body2" fontWeight="700">
               プライベート
             </Typography>
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                addMemo();
+              }}
+            >
               <AddBoxOutlined />
             </IconButton>
           </Box>

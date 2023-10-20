@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { MemoType } from '../../types/types';
 
 // 初期状態の型
 interface MemoState {
-  value: Record<string, any>;
+  value: MemoType[];
 }
 const initialState: MemoState = { value: [] };
 
