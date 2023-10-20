@@ -1,13 +1,19 @@
 import { DeleteOutlineOutlined, StarBorderOutlined } from '@mui/icons-material';
 import { Box, Button, IconButton, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import memoApi from '../api/memoApi';
+import { useAddDispatch, useAppSelector } from '../redux/store';
+import { MemoType } from '../types/types';
+import { setMemo } from '../redux/features/memoSlice';
 
 const Memo = () => {
   const { memoId } = useParams<string>();
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const dispatch = useAddDispatch();
+  const navigate = useNavigate();
+  const memos = useAppSelector((state) => state.memo.value);
   useEffect(() => {
     const getMemo = async () => {
       try {
@@ -67,6 +73,14 @@ const Memo = () => {
       if (memoId !== undefined) {
         const deletedMemo = await memoApi.delete(memoId);
         console.log(deletedMemo);
+
+        const newMemos = memos.filter((e: MemoType) => e._id !== memoId);
+        if (newMemos.length === 0) {
+          navigate('/memo');
+        } else {
+          navigate(`/memo/${newMemos[0]._id}`);
+        }
+        dispatch(setMemo(newMemos));
       } else {
         alert('メモが選択されていません。');
       }
