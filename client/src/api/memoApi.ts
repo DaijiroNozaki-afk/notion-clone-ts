@@ -9,6 +9,7 @@ interface userInt {
 interface updateInt {
   title?: string;
   description?: string;
+  icon?: string;
   // パラメーターが増えたら追加する
 }
 const memoApi = {

@@ -94,7 +94,7 @@ exports.delete = async (
       if (!memo) return res.status(404).json('メモが存在しません。');
 
       await Memo.deleteOne({ _id: memoId });
-      res.status(200).json(memo);
+      res.status(200).json('メモ削除しました。');
     } else {
       res.status(404).json('メモが存在しません。');
     }
