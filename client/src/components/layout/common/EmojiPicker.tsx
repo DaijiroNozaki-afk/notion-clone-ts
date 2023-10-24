@@ -5,6 +5,16 @@ import Picker from '@emoji-mart/react';
 interface emojiInt {
   icon: string;
 }
+interface Emoji2Int {
+  id: string;
+  name: string;
+  emoticons: string[];
+  unicode: string;
+  keywords: string[];
+  native: string;
+  shortcodes: string;
+  unified: string;
+}
 
 const EmojiPicker = (props: emojiInt) => {
   const [selectedEmoji, setSelectedEmoji] = useState<string>();
@@ -14,6 +24,17 @@ const EmojiPicker = (props: emojiInt) => {
   }, [props.icon]);
 
   const showPicker = () => setIsShowPicker(!isShowPicker);
+
+  const selectEmoji = (e: Emoji2Int) => {
+    // console.log(e);
+    const emojiCode: string[] = e.unified.split('-');
+    let codesArray: number[] = [];
+    emojiCode.forEach((el) => codesArray.push(Number('0x' + el)));
+    // console.log(codesArray);
+    const emoji = String.fromCodePoint(...codesArray);
+    console.log(emoji);
+    setIsShowPicker(false);
+  };
   return (
     <Box>
       <Typography
@@ -31,7 +52,7 @@ const EmojiPicker = (props: emojiInt) => {
           zIndex: '100',
         }}
       >
-        <Picker />
+        <Picker onEmojiSelect={selectEmoji} />
       </Box>
     </Box>
   );
