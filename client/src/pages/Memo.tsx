@@ -91,6 +91,23 @@ const Memo = () => {
       alert(err);
     }
   };
+
+  const onIconChange = async (newIcon: string) => {
+    let temp = [...memos];
+    const index = temp.findIndex((e) => e._id === memoId);
+    temp[index] = { ...temp[index], icon: newIcon };
+    setIcon(newIcon);
+    dispatch(setMemo(temp));
+    try {
+      if (memoId !== undefined) {
+        await memoApi.update(memoId, { icon: newIcon });
+      } else {
+        alert('メモが選択されていません。');
+      }
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <>
       <Box
@@ -109,7 +126,7 @@ const Memo = () => {
       </Box>
       <Box sx={{ padding: '10px 50px' }}>
         <Box>
-          <EmojiPicker icon={icon} />
+          <EmojiPicker icon={icon} onChange={onIconChange} />
           <TextField
             onChange={updateTitle}
             value={title}

@@ -4,6 +4,7 @@ import Picker from '@emoji-mart/react';
 
 interface emojiInt {
   icon: string;
+  onChange: (newIcon: string) => void;
 }
 interface Emoji2Int {
   id: string;
@@ -26,14 +27,12 @@ const EmojiPicker = (props: emojiInt) => {
   const showPicker = () => setIsShowPicker(!isShowPicker);
 
   const selectEmoji = (e: Emoji2Int) => {
-    // console.log(e);
     const emojiCode: string[] = e.unified.split('-');
     let codesArray: number[] = [];
     emojiCode.forEach((el) => codesArray.push(Number('0x' + el)));
-    // console.log(codesArray);
     const emoji = String.fromCodePoint(...codesArray);
-    console.log(emoji);
     setIsShowPicker(false);
+    props.onChange(emoji);
   };
   return (
     <Box>
